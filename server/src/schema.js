@@ -1,9 +1,9 @@
 import {gql} from "apollo-server-express";
-import {cars, people} from "./data.js";
-import {find, remove} from "lodash";
-import {PersonMutation, personMutation} from "./mutations/PersonMutation";
+import {people} from "./data.js";
+import {PersonMutation} from "./mutations/PersonMutation";
 import PersonQueries from "./queries/PersonQueries";
 import {CarMutations} from "./mutations/CarMutation";
+import CarQueries from "./queries/CarQueries";
 
 let person_data = people;
 
@@ -40,7 +40,8 @@ const typeDefs = gql`
 `;
 const resolvers = {
     Query: {
-        ...PersonQueries
+        ...PersonQueries,
+        ...CarQueries
     },
     Mutation: {
         ...PersonMutation,
