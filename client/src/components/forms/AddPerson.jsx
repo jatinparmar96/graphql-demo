@@ -2,11 +2,11 @@ import { useMutation } from "@apollo/client";
 import { Button, Form, Input } from "antd";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { ADD_CONTACT, GET_CONTACTS } from "../../queries";
+import { ADD_PERSON, GET_PERSONS } from "../../queries";
 
 const AddPerson = () => {
   const [id] = useState(uuidv4());
-  const [addContact] = useMutation(ADD_CONTACT);
+  const [addContact] = useMutation(ADD_PERSON);
 
   const [form] = Form.useForm();
 
@@ -19,13 +19,12 @@ const AddPerson = () => {
         firstName,
         lastName,
       },
-      update: (cache, { data: { addContact } }) => {
-        const data = cache.readQuery({ query: GET_CONTACTS });
+      update: (cache, { data: { addPerson } }) => {
+        const data = cache.readQuery({ query: GET_PERSONS });
         cache.writeQuery({
-          query: GET_CONTACTS,
+          query: GET_PERSONS,
           data: {
-            ...data,
-            contacts: [...data.contacts, addContact],
+            persons: [...data.persons, addPerson],
           },
         });
       },

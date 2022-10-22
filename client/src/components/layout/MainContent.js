@@ -2,6 +2,7 @@ import { Segmented } from "antd";
 import { useState } from "react";
 import AddCar from "../forms/AddCar";
 import AddPerson from "../forms/AddPerson";
+import PersonList from "../lists/PersonList";
 
 const getStyles = () => ({
   container: {
@@ -35,6 +36,8 @@ const MainContent = () => {
         ]}
       />
       {current === "person" ? <AddPerson /> : <AddCar />}
+
+      <PersonList />
     </div>
   );
 };
