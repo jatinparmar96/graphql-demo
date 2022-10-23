@@ -66,3 +66,40 @@ export const ADD_CAR = gql`
     }
   }
 `;
+
+export const UPDATE_PERSON = gql`
+  mutation UpdatePerson($id: String!, $firstName: String, $lastName: String) {
+    updatePerson(id: $id, firstName: $firstName, lastName: $lastName) {
+      id
+      firstName
+      lastName
+    }
+  }
+`;
+
+export const UPDATE_CAR = gql`
+  mutation UpdateCar(
+    $id: String!
+    $personId: String!
+    $model: String
+    $make: String
+    $year: Int
+    $price: Float
+  ) {
+    updateCar(
+      id: $id
+      personId: $personId
+      model: $model
+      make: $make
+      year: $year
+      price: $price
+    ) {
+      id
+      model
+      make
+      year
+      price
+      personId
+    }
+  }
+`;

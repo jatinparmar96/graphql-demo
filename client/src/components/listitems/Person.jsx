@@ -1,18 +1,30 @@
 import { EditOutlined } from "@ant-design/icons";
-import { Card, List } from "antd";
+import { Card, Col, Row } from "antd";
+import { useState } from "react";
 import RemovePerson from "../buttons/RemovePerson";
+import UpdatePerson from "../forms/UpdatePerson";
 import Car from "./Car";
+
 const getStyles = () => ({
   card: {
     width: "500px",
   },
 });
+
 const Person = ({ id, firstName, lastName, cars }) => {
+  const [isUpdate, setIsUpdate] = useState(false);
   const handleButtonClick = (e) => {
-    console.log(e);
+    setIsUpdate(!isUpdate);
   };
   const styles = getStyles();
-  return (
+  return isUpdate ? (
+    <UpdatePerson
+      id={id}
+      firstName={firstName}
+      lastName={lastName}
+      onButtonClick={handleButtonClick}
+    />
+  ) : (
     <Card
       style={styles.card}
       title={`${firstName} ${lastName}`}
@@ -22,13 +34,13 @@ const Person = ({ id, firstName, lastName, cars }) => {
         // <RemoveContact id={id} />,
       ]}
     >
-      <List grid={{ gutter: 20, columns: 4 }}>
+      <Row gutter={16}>
         {cars.map((car) => (
-          <List.Item key={car.id}>
+          <Col span={12} key={car.id}>
             <Car {...car} />
-          </List.Item>
+          </Col>
         ))}
-      </List>
+      </Row>
     </Card>
   );
 };

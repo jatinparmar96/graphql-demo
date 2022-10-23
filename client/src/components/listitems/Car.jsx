@@ -1,10 +1,17 @@
 import { EditOutlined } from "@ant-design/icons";
 import { Card } from "antd";
+import { useState } from "react";
 import RemoveCar from "../buttons/RemoveCar";
+import UpdateCar from "../forms/UpdateCar";
 
-const Car = ({ make, model, year, personId, id }) => {
-  const handleButtonClick = () => {};
-  return (
+const Car = (props) => {
+  const { make, model, year, personId, id } = props;
+  const [editMode, setEditMode] = useState(false);
+
+  const handleButtonClick = () => setEditMode(!editMode);
+  return editMode ? (
+    <UpdateCar {...props} onButtonClick={handleButtonClick} />
+  ) : (
     <Card
       type="inner"
       title={`${make} ${model}`}
