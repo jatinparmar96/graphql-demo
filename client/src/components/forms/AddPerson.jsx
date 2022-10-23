@@ -1,11 +1,9 @@
 import { useMutation } from "@apollo/client";
 import { Button, Form, Input } from "antd";
-import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { ADD_PERSON, GET_PERSONS } from "../../queries";
 
 const AddPerson = () => {
-  const [id] = useState(uuidv4());
   const [addContact] = useMutation(ADD_PERSON);
 
   const [form] = Form.useForm();
@@ -15,7 +13,7 @@ const AddPerson = () => {
 
     addContact({
       variables: {
-        id,
+        id: uuidv4(),
         firstName,
         lastName,
       },
@@ -29,6 +27,7 @@ const AddPerson = () => {
         });
       },
     });
+    form.resetFields();
   };
 
   return (

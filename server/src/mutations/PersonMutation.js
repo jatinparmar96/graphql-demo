@@ -1,5 +1,5 @@
 import { find, remove } from "lodash";
-import { persons } from "../data";
+import { cars, persons } from "../data";
 
 export const PersonMutation = {
   addPerson: (root, args) => {
@@ -27,6 +27,9 @@ export const PersonMutation = {
     }
     remove(persons, (c) => {
       return c.id === removedContact.id;
+    });
+    remove(cars, (c) => {
+      return c.personId === removedContact.id;
     });
     return removedContact;
   },

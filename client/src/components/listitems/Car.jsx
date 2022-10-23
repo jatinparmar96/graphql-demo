@@ -5,10 +5,14 @@ import RemoveCar from "../buttons/RemoveCar";
 import UpdateCar from "../forms/UpdateCar";
 
 const Car = (props) => {
-  const { make, model, year, personId, id } = props;
+  const { make, model, year, price, id } = props;
   const [editMode, setEditMode] = useState(false);
 
   const handleButtonClick = () => setEditMode(!editMode);
+  const formatter = Intl.NumberFormat("en-CA", {
+    style: "currency",
+    currency: "CAD",
+  });
   return editMode ? (
     <UpdateCar {...props} onButtonClick={handleButtonClick} />
   ) : (
@@ -20,7 +24,8 @@ const Car = (props) => {
         <RemoveCar id={id} />,
       ]}
     >
-      Year:{year}
+      <p> Year: {year}</p>
+      <p>Price: {formatter.format(price)}</p>
     </Card>
   );
 };

@@ -37,6 +37,7 @@ const AddCar = () => {
         }
       },
     });
+    form.resetFields();
   };
 
   return (
