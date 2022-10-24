@@ -1,12 +1,10 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { Button, Form, Input, InputNumber, Select } from "antd";
 import { v4 as uuidv4 } from "uuid";
-import { ADD_CAR, GET_CARS, GET_PERSONS } from "../../queries";
+import { ADD_CAR, GET_PERSONS } from "../../queries";
 
 const AddCar = () => {
-  const [addCar] = useMutation(ADD_CAR, {
-    refetchQueries: [{ query: GET_PERSONS }],
-  });
+  const [addCar] = useMutation(ADD_CAR);
 
   const { data, loading, error } = useQuery(GET_PERSONS);
 
@@ -26,15 +24,22 @@ const AddCar = () => {
     addCar({
       variables: newCar,
       update: (cache, { data: { addCar } }) => {
-        const data = cache.readQuery({ query: GET_CARS });
-        if (data) {
-          cache.writeQuery({
-            query: GET_CARS,
-            data: {
-              cars: [...data.cars, addCar],
-            },
-          });
-        }
+        const data = cache.readQuery({ query: GET_PERSONS });
+        const newData = data.persons.map((person) => {
+          if (person.id === addCar.personId) {
+            return {
+              ...person,
+              cars: [...person.cars, addCar],
+            };
+          }
+          return person;
+        });
+        cache.writeQuery({
+          query: GET_PERSONS,
+          data: {
+            persons: newData,
+          },
+        });
       },
     });
     form.resetFields();

@@ -6,9 +6,7 @@ const UpdateCar = (props) => {
   const { id, make, model, year, price, personId } = props;
 
   const { data, loading, error } = useQuery(GET_PERSONS);
-  const [updateCar] = useMutation(UPDATE_CAR, {
-    refetchQueries: [{ query: GET_PERSONS }],
-  });
+  const [updateCar] = useMutation(UPDATE_CAR);
 
   const [form] = Form.useForm();
 
@@ -24,6 +22,31 @@ const UpdateCar = (props) => {
         price: parseFloat(price),
         personId,
       },
+      update: (cache, { data: { updateCar } }) => {
+        const data = cache.readQuery({ query: GET_PERSONS });
+        const newData = data.persons
+          .map((person) => {
+            return {
+              ...person,
+              cars: person.cars.filter((car) => car.id !== updateCar.id),
+            };
+          })
+          .map((person) => {
+            if (person.id === updateCar.personId) {
+              return {
+                ...person,
+                cars: [...person.cars, updateCar],
+              };
+            }
+            return person;
+          });
+        cache.writeQuery({
+          query: GET_PERSONS,
+          data: {
+            persons: newData,
+          },
+        });
+      },
     });
     props.onButtonClick();
   };
@@ -31,7 +54,7 @@ const UpdateCar = (props) => {
     <Form
       form={form}
       name="update-contact-form"
-      layout="inline"
+      layout="horizontal"
       onFinish={onFinish}
       size="large"
       initialValues={{

@@ -1,5 +1,5 @@
 import { EditOutlined } from "@ant-design/icons";
-import { Card, Col, Row } from "antd";
+import { Card, List } from "antd";
 import { useState } from "react";
 import RemovePerson from "../buttons/RemovePerson";
 import UpdatePerson from "../forms/UpdatePerson";
@@ -8,6 +8,12 @@ import Car from "./Car";
 const getStyles = () => ({
   card: {
     width: "500px",
+    justifyContent: "start",
+  },
+  grid: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    gridGap: "1rem",
   },
 });
 
@@ -34,13 +40,17 @@ const Person = ({ id, firstName, lastName, cars }) => {
         // <RemoveContact id={id} />,
       ]}
     >
-      <Row gutter={16}>
+      <h2>Cars List</h2>
+      <List
+        itemLayout="horizontal"
+        dataSource={cars}
+        renderItem={(item) => <Car {...item} />}
+      />
+      {/* <Row style={styles.grid}>
         {cars.map((car) => (
-          <Col span={12} key={car.id}>
-            <Car {...car} />
-          </Col>
+          <Car {...car} />
         ))}
-      </Row>
+      </Row> */}
     </Card>
   );
 };

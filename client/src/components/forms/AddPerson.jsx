@@ -19,6 +19,7 @@ const AddPerson = () => {
       },
       update: (cache, { data: { addPerson } }) => {
         const data = cache.readQuery({ query: GET_PERSONS });
+        addPerson = { ...addPerson, cars: [] };
         cache.writeQuery({
           query: GET_PERSONS,
           data: {
