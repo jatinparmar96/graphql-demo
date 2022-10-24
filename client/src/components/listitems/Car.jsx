@@ -1,6 +1,7 @@
 import { EditOutlined } from "@ant-design/icons";
 import { Card } from "antd";
 import { useState } from "react";
+import { currencyFormatter } from "../../utils/currencyFormatter";
 import RemoveCar from "../buttons/RemoveCar";
 import UpdateCar from "../forms/UpdateCar";
 
@@ -9,10 +10,6 @@ const Car = (props) => {
   const [editMode, setEditMode] = useState(false);
 
   const handleButtonClick = () => setEditMode(!editMode);
-  const formatter = Intl.NumberFormat("en-CA", {
-    style: "currency",
-    currency: "CAD",
-  });
   return editMode ? (
     <UpdateCar {...props} onButtonClick={handleButtonClick} />
   ) : (
@@ -26,7 +23,7 @@ const Car = (props) => {
       ]}
     >
       <p> Year: {year}</p>
-      <p>Price: {formatter.format(price)}</p>
+      <p>Price: {currencyFormatter.format(price)}</p>
     </Card>
   );
 };

@@ -1,6 +1,7 @@
 import { EditOutlined } from "@ant-design/icons";
 import { Card, List } from "antd";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import RemovePerson from "../buttons/RemovePerson";
 import UpdatePerson from "../forms/UpdatePerson";
 import Car from "./Car";
@@ -37,7 +38,7 @@ const Person = ({ id, firstName, lastName, cars }) => {
       actions={[
         <EditOutlined key="edit" onClick={handleButtonClick} />,
         <RemovePerson id={id} />,
-        // <RemoveContact id={id} />,
+        <Link to={`/person/${id}`}>Learn More</Link>,
       ]}
     >
       <h2>Cars List</h2>
@@ -46,11 +47,6 @@ const Person = ({ id, firstName, lastName, cars }) => {
         dataSource={cars}
         renderItem={(item) => <Car {...item} />}
       />
-      {/* <Row style={styles.grid}>
-        {cars.map((car) => (
-          <Car {...car} />
-        ))}
-      </Row> */}
     </Card>
   );
 };

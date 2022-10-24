@@ -25,7 +25,7 @@ const UpdatePerson = (props) => {
     <Form
       form={form}
       name="update-person-form"
-      layout="inline"
+      layout="horizontal"
       onFinish={onFinish}
       size="large"
       initialValues={{
