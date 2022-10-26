@@ -29,19 +29,3 @@ const Car = (props) => {
 };
 
 export default Car;
-
-/*
-
- <Card
-      type="inner"
-      title={`${make} ${model}`}
-      actions={[
-        <EditOutlined key="edit" onClick={handleButtonClick} />,
-        <RemoveCar id={id} />,
-      ]}
-    >
-      <p> Year: {year}</p>
-      <p>Price: {formatter.format(price)}</p>
-    </Card>
-
-    */

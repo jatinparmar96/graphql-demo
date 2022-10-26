@@ -1,20 +1,15 @@
 import { EditOutlined } from "@ant-design/icons";
-import { Card, List } from "antd";
+import { Card } from "antd";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import RemovePerson from "../buttons/RemovePerson";
 import UpdatePerson from "../forms/UpdatePerson";
-import Car from "./Car";
+import CarsList from "../lists/CarsList";
 
 const getStyles = () => ({
   card: {
     width: "500px",
     justifyContent: "start",
-  },
-  grid: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gridGap: "1rem",
   },
 });
 
@@ -36,17 +31,13 @@ const Person = ({ id, firstName, lastName, cars }) => {
       style={styles.card}
       title={`${firstName} ${lastName}`}
       actions={[
+        <Link to={`/person/${id}`}>Learn More</Link>,
         <EditOutlined key="edit" onClick={handleButtonClick} />,
         <RemovePerson id={id} />,
-        <Link to={`/person/${id}`}>Learn More</Link>,
       ]}
     >
       <h2>Cars List</h2>
-      <List
-        itemLayout="horizontal"
-        dataSource={cars}
-        renderItem={(item) => <Car {...item} />}
-      />
+      <CarsList cars={cars} />
     </Card>
   );
 };
